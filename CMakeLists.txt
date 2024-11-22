@@ -579,6 +579,10 @@ elseif (BUILD_EXAMPLES)
                             ${test_SRC_PATH}/ab_server/src/eip.c
                             ${test_SRC_PATH}/ab_server/src/eip.h
                             ${test_SRC_PATH}/ab_server/src/main.c
+                            ${test_SRC_PATH}/ab_server/src/memory.c
+                            ${test_SRC_PATH}/ab_server/src/memory.h
+                            ${test_SRC_PATH}/ab_server/src/mutex.c
+                            ${test_SRC_PATH}/ab_server/src/mutex.h
                             ${test_SRC_PATH}/ab_server/src/pccc.c
                             ${test_SRC_PATH}/ab_server/src/pccc.h
                             ${test_SRC_PATH}/ab_server/src/plc.h
@@ -587,6 +591,8 @@ elseif (BUILD_EXAMPLES)
                             ${test_SRC_PATH}/ab_server/src/socket.h
                             ${test_SRC_PATH}/ab_server/src/tcp_server.c
                             ${test_SRC_PATH}/ab_server/src/tcp_server.h
+                            ${test_SRC_PATH}/ab_server/src/thread.c
+                            ${test_SRC_PATH}/ab_server/src/thread.h
                             ${test_SRC_PATH}/ab_server/src/utils.c
                             ${test_SRC_PATH}/ab_server/src/utils.h
         )
