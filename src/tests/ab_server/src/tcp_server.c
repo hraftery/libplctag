@@ -169,8 +169,8 @@ THREAD_FUNC(conn_handler)
         /* get an incoming packet or a partial packet. */
         tmp_input = socket_read(session->client_fd, tmp_input);
 
-        if(rc = slice_has_err(tmp_input)) {
-            info("WARN: error response reading socket! error %d", rc); /* copying bug so fix is part of new commit slice_get_err(tmp_input)); */
+        if(slice_has_err(tmp_input)) {
+            info("WARN: error response reading socket! error %d", slice_get_err(tmp_input));
             rc = TCP_SERVER_DONE;
             break;
         }
@@ -195,7 +195,7 @@ THREAD_FUNC(conn_handler)
             }
         } else {
             /* there was some sort of error or exceptional condition. */
-            switch((rc = slice_get_err(tmp_input))) { /* copying "input" bug so fix is part of new commit */
+            switch((rc = slice_get_err(tmp_output))) {
                 case TCP_SERVER_DONE:
                     /* Note this is assumed atomic, which is not guaranteed. To be really sure it
                        should be mutex protected or changed to a stdatomic. The former is messy
