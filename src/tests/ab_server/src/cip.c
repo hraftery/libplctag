@@ -586,7 +586,7 @@ slice_s handle_write_request(slice_s input, slice_s output, plc_s *plc)
     }
 
     /* copy the data. */
-    info("byte_offset = %d", byte_offset);
+    info("byte_offset = %d", write_start_offset);
     info("offset = %d", offset);
     info("total_request_size = %d", total_request_size);
     critical_block(tag->data_mutex) {
@@ -713,11 +713,18 @@ bool process_tag_segment(plc_s *plc, slice_s input, tag_def_s **tag, size_t *sta
             }
 
             /* calculate the offset. */
-            element_offset = (size_t)(dimensions[0] * ((*tag)->dimensions[1] * (*tag)->dimensions[2]) +
-                                      dimensions[1] *  (*tag)->dimensions[2] +
-                                      dimensions[2]);
+            if ((*tag)->num_dimensions == 1) {
+                // Simple single dimension array
+                element_offset = dimensions[0];
+            } else {
+                // Multi-dimensional calculation
+                element_offset = (size_t)(dimensions[0] * ((*tag)->dimensions[1] * (*tag)->dimensions[2]) +
+                                        dimensions[1] *  (*tag)->dimensions[2] +
+                                        dimensions[2]);
+            }
 
             *start_read_offset = (size_t)((*tag)->elem_size * element_offset);
+            info("Calculated byte offset %zu for dimension %zu", *start_read_offset, dimensions[0]);
         } else {
             *start_read_offset = 0;
         }
@@ -725,8 +732,6 @@ bool process_tag_segment(plc_s *plc, slice_s input, tag_def_s **tag, size_t *sta
         info("Tag %.*s not found!", slice_len(tag_name), (const char *)(tag_name.data));
         return false;
     }
-
-
 
     return true;
 }
