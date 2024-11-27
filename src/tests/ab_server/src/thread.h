@@ -33,6 +33,11 @@
 
 #pragma once
 
+#include "compat.h"
+#if IS_WINDOWS
+    #include <MSCorEE.h> /* Just for LPTHREAD_START_ROUTINE */
+#endif
+
 /* Derived from PLCTAG_STATUS_OK et al. */
 typedef enum {
     THREAD_STATUS_OK            = 0,
