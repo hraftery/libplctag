@@ -495,7 +495,7 @@ slice_s handle_read_request(slice_s input, slice_s output, plc_s *plc)
     critical_block(tag->data_mutex) {
         /* FIXME - use memcpy */
         for(size_t i=0; i < amount_to_copy; i++) {
-            slice_set_uint8(output, offset + i, tag->data[byte_offset + i]);
+            slice_set_uint8(output, offset + i, tag->data[read_start_offset + i]);
         }
     }
 
@@ -590,7 +590,7 @@ slice_s handle_write_request(slice_s input, slice_s output, plc_s *plc)
     info("offset = %d", offset);
     info("total_request_size = %d", total_request_size);
     critical_block(tag->data_mutex) {
-        memcpy(&tag->data[byte_offset], slice_get_bytes(input, offset), total_request_size);
+        memcpy(&tag->data[write_start_offset], slice_get_bytes(input, offset), total_request_size);
     }
 
     /* start making the response. */
