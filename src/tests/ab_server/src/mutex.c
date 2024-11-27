@@ -32,8 +32,8 @@
  ***************************************************************************/
 
 #include "compat.h"
-
 #if IS_WINDOWS
+    #include <windows.h>
     #include <synchapi.h>
 #else
     #include <pthread.h>
