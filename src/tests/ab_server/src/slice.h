@@ -68,7 +68,11 @@ inline static bool slice_match_bytes(slice_s s, const uint8_t *data, size_t data
     }
     return true;
 }
-inline static bool slice_match_string(slice_s s, const char *data) { return slice_match_bytes(s, (const uint8_t*)data, strlen(data)); }
+/* unlike slice_match_bytes, also checks the slice is not longer than the str */
+inline static bool slice_is_string(slice_s s, const char *str) {
+    size_t len = strlen(str);
+    return len == slice_len(s) && slice_match_bytes(s, (const uint8_t*)str, len);
+}
 
 inline static slice_s slice_from_slice(slice_s src, size_t start, size_t len) {
     ssize_t actual_start;
