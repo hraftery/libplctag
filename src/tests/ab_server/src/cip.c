@@ -640,7 +640,7 @@ bool process_tag_segment(plc_s *plc, slice_s input, tag_def_s **tag, size_t *sta
     *tag = plc->tags;
 
     while(*tag) {
-        if(slice_match_string(tag_name, (*tag)->name)) {
+        if(slice_is_string(tag_name, (*tag)->name)) {
             info("Found tag %s", (*tag)->name);
             break;
         }
